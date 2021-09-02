@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import { useContext } from "react";
 import UserContext, { UserProvider } from "./contexts/UserContext";
-import Login from "./pages/Login";
+import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import MainPage from "./pages/MainPage";
 
@@ -17,8 +17,8 @@ export default function App() {
 
             <Router>
               <Switch>
-                <UnprotectedRoute path="/login" exact>
-                  <Login />
+                <UnprotectedRoute path="/" exact>
+                  <SignIn />
                 </UnprotectedRoute> 
   
                 <UnprotectedRoute path="/sign-up" exact>
