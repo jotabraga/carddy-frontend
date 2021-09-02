@@ -8,7 +8,7 @@ import { useContext } from "react";
 import UserContext, { UserProvider } from "./contexts/UserContext";
 import Login from "./pages/Login";
 import SignUp from "./pages/SignUp";
-import Dashboard from "./pages/Dashboard";
+import MainPage from "./pages/MainPage";
 
 export default function App() {
     return (
@@ -26,7 +26,7 @@ export default function App() {
                 </UnprotectedRoute>
     
                 <ProtectedRoute path="/carddys" exact>
-                  <Dashboard />
+                  <MainPage />
                 </ProtectedRoute>
 
               </Switch>
