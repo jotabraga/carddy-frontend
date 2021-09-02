@@ -4,6 +4,11 @@ import {
     Route,
     Redirect
 } from "react-router-dom";
+import { useContext } from "react";
+import UserContext, { UserProvider } from "./contexts/UserContext";
+import Login from "./pages/Login";
+import SignUp from "./pages/SignUp";
+import Dashboard from "./pages/Dashboard";
 
 export default function App() {
     return (
@@ -14,23 +19,16 @@ export default function App() {
               <Switch>
                 <UnprotectedRoute path="/login" exact>
                   <Login />
-                </UnprotectedRoute>
-  
-                <Route path="/populate-database" exact>
-                  <PopulateDatabase />
-                </Route>
+                </UnprotectedRoute> 
   
                 <UnprotectedRoute path="/sign-up" exact>
                   <SignUp />
                 </UnprotectedRoute>
     
                 <ProtectedRoute path="/carddys" exact>
-                  <PokemonList />
+                  <Dashboard />
                 </ProtectedRoute>
-  
-                <ProtectedRoute path="/carddy/:id" exact>
-                  <MyPokemons />
-                </ProtectedRoute>
+
               </Switch>
             </Router>
 
