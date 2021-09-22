@@ -19,12 +19,12 @@ export default function App() {
               <Switch>
                 <UnprotectedRoute path="/" exact>
                   <SignIn />
-                </UnprotectedRoute> 
-  
+                </UnprotectedRoute>
+
                 <UnprotectedRoute path="/sign-up" exact>
                   <SignUp />
                 </UnprotectedRoute>
-    
+
                 <ProtectedRoute path="/carddys" exact>
                   <MainPage />
                 </ProtectedRoute>
@@ -39,20 +39,20 @@ export default function App() {
 
   function ProtectedRoute({ redirect = "/login", ...props }) {
     const { token } = useContext(UserContext);
-  
+
     if (!token) {
       return <Redirect to={redirect} />;
     }
-  
+
     return <Route {...props} />;
   }
-  
+
   function UnprotectedRoute({ redirect = "/", ...props }) {
     const { token } = useContext(UserContext);
-  
+
     if (token) {
       return <Redirect to={redirect} />;
     }
-  
+
     return <Route {...props} />;
   }

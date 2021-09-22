@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -8,59 +8,49 @@ import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from '../../styles/auth';
 import Container from '@material-ui/core/Container';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Carddy
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', 
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
+import { Copyright } from '../../components/Copyright';
 
 export default function SignIn() {
   const classes = useStyles();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    setFormData({
+      email: '',
+      password: '',
+    });
+  };
+
+  const handleChange = (event) => {
+    console.log(formData);
+    const newData = { ...formData };
+    newData[event.target.name] = event.target.value;
+    setFormData(newData);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <PersonAddIcon />
+          <ExitToAppIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign up
+          Sign in
         </Typography>
-        <form className={classes.form} noValidate>
+        <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <TextField
+            value={formData.email}
+            onChange={handleChange}
             variant="outlined"
             margin="normal"
             required
@@ -72,6 +62,8 @@ export default function SignIn() {
             autoFocus
           />
           <TextField
+            value={formData.password}
+            onChange={handleChange}
             variant="outlined"
             margin="normal"
             required
@@ -82,16 +74,9 @@ export default function SignIn() {
             id="password"
             autoComplete="current-password"
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="confirm password"
-            label="Confirm Password"
-            type="confirm password"
-            id="confirm password"
-            autoComplete="current-password"
+          <FormControlLabel
+            control={<Checkbox value="remember" color="primary" />}
+            label="Remember me"
           />
           <Button
             type="submit"
@@ -109,8 +94,8 @@ export default function SignIn() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/" variant="body2">
-                {"Already have an account? Sign In"}
+              <Link href="/sign-up" variant="body2">
+                {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
           </Grid>

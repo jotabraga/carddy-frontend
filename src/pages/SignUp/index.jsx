@@ -1,77 +1,70 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
 import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Typography from '@material-ui/core/Typography';
-import { makeStyles } from '@material-ui/core/styles';
+import { useStyles } from '../../styles/auth';
 import Container from '@material-ui/core/Container';
+import { Copyright } from '../../components/Copyright';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Carddy
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    marginTop: theme.spacing(8),
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
-  form: {
-    width: '100%', 
-    marginTop: theme.spacing(1),
-  },
-  submit: {
-    margin: theme.spacing(3, 0, 2),
-  },
-}));
-
-export default function SignIn() {
+export default function SignUp() {
   const classes = useStyles();
+  const [formData, setFormData] = useState({
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    setFormData({
+      email: '',
+      password: '',
+      confirmPassword: ''
+    });
+  };
+
+  const handleChange = (event) => {
+    console.log(formData);
+    const newData = {...formData};
+    newData[event.target.name] = event.target.value;
+    setFormData(newData);
+  };
 
   return (
     <Container component="main" maxWidth="xs">
       <CssBaseline />
       <div className={classes.paper}>
         <Avatar className={classes.avatar}>
-          <ExitToAppIcon />
+          <PersonAddIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          Sign up
         </Typography>
-        <form className={classes.form} noValidate>
+        <form onSubmit={handleSubmit} className={classes.form} noValidate>
           <TextField
+            value={formData.email}
+            onChange={handleChange}
             variant="outlined"
             margin="normal"
             required
             fullWidth
             id="email"
+            type="email"
             label="Email Address"
             name="email"
             autoComplete="email"
             autoFocus
           />
           <TextField
+            value={formData.password}
+            onChange={handleChange}
             variant="outlined"
             margin="normal"
             required
@@ -82,9 +75,18 @@ export default function SignIn() {
             id="password"
             autoComplete="current-password"
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+          <TextField
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            variant="outlined"
+            margin="normal"
+            required
+            fullWidth
+            name="confirmPassword"
+            label="Confirm Password"
+            type="password"
+            id="confirm password"
+            autoComplete="current-password"
           />
           <Button
             type="submit"
@@ -102,8 +104,8 @@ export default function SignIn() {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="/sign-up" variant="body2">
-                {"Don't have an account? Sign Up"}
+              <Link href="/" variant="body2">
+                {"Already have an account? Sign In"}
               </Link>
             </Grid>
           </Grid>
