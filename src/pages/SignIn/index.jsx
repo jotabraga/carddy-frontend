@@ -17,6 +17,7 @@ import useApi from "../../hooks/useApi";
 
 export default function SignIn() {
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -26,6 +27,24 @@ export default function SignIn() {
 
   function handleSubmit(event) {
     event.preventDefault();
+
+    setLoading(true);
+
+    api.auth.signIn(email, password).then(response => {
+      setUserData(response.data);
+    }).catch(error => {
+      /* eslint-disable-next-line no-console */
+      console.error(error);
+      if (error.response) {
+        toast(error.response.data.message);
+      } else {
+        toast("Não foi possível conectar ao servidor!");
+      }
+    }).then(() => {
+      setLoadingSignIn(false);
+    });
+
+    
 
     
 
